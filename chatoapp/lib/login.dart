@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:chato_app/forgetpassword.dart';
+import 'package:chato_app/homepage.dart';
 import 'package:chato_app/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chato_app/w_and_h.dart';
 
@@ -13,13 +15,32 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   GlobalKey scafolindexkey = GlobalKey<ScaffoldState>();
+  FirebaseAuth instance = FirebaseAuth.instance;
+  @override
+  void initState() {
+    super.initState();
+    instance.authStateChanges().listen((User user) {
+      if (user != null) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     TextEditingController email = TextEditingController();
     TextEditingController password = TextEditingController();
     String e_mail = "";
     String pass_word = "";
+
     var padingright = (get_width(context) - get_width(context) / 1.1) / 2;
+
+    void showsnackbaaar(context) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text('you dont have account or pass and email are rong')));
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'index',
@@ -107,12 +128,25 @@ class _LoginState extends State<Login> {
                                 width: get_width(context) / 2,
                                 height: get_height(context) / 15,
                                 child: RaisedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (_formKey.currentState.validate()) {
                                       setState(() {
                                         e_mail = email.text;
                                         pass_word = password.text;
                                       });
+                                      try {
+                                        await instance
+                                            .signInWithEmailAndPassword(
+                                                email: e_mail,
+                                                password: pass_word);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomePage()));
+                                      } catch (e) {
+                                        showsnackbaaar(context);
+                                      }
                                     }
                                   },
                                   child: Text(

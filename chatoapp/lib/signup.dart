@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:chato_app/forgetpassword.dart';
+import 'package:chato_app/homepage.dart';
 import 'package:chato_app/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chato_app/w_and_h.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +20,7 @@ class _SignupState extends State<Signup> {
   TextEditingController password = TextEditingController();
   TextEditingController username = TextEditingController();
   TextEditingController phonenumber = TextEditingController();
+  FirebaseAuth instance = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     String e_mail = "";
@@ -165,7 +168,7 @@ class _SignupState extends State<Signup> {
                                 width: get_width(context) / 2,
                                 height: get_height(context) / 15,
                                 child: RaisedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (_formKey_signup.currentState
                                         .validate()) {
                                       setState(() {
@@ -176,6 +179,17 @@ class _SignupState extends State<Signup> {
                                             int.parse(phonenumber.text);
                                       });
                                     }
+                                    try {
+                                      await instance
+                                          .createUserWithEmailAndPassword(
+                                              email: e_mail,
+                                              password: pass_word);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomePage()));
+                                    } catch (e) {}
                                   },
                                   child: Text(
                                     'Sign Up',
