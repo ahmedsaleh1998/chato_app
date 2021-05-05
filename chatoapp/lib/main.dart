@@ -1,4 +1,4 @@
-import 'package:chato_app/homepage.dart';
+import 'package:chato_app/hometabs.dart';
 import 'package:chato_app/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
             context, MaterialPageRoute(builder: (context) => Login()));
       } else {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => hometabs()));
       }
     });
   }

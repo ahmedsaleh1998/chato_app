@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:chato_app/forgetpassword.dart';
-import 'package:chato_app/homepage.dart';
+
+import 'package:chato_app/hometabs.dart';
 import 'package:chato_app/login.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chato_app/w_and_h.dart';
@@ -21,6 +23,7 @@ class _SignupState extends State<Signup> {
   TextEditingController username = TextEditingController();
   TextEditingController phonenumber = TextEditingController();
   FirebaseAuth instance = FirebaseAuth.instance;
+  var fireinstance = FirebaseFirestore.instance.collection('users');
   @override
   Widget build(BuildContext context) {
     String e_mail = "";
@@ -51,7 +54,8 @@ class _SignupState extends State<Signup> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
-                          child: Text('SignUp', style: TextStyle(fontSize: 30)),
+                          child:
+                              Text('Sign Up', style: TextStyle(fontSize: 30)),
                         ),
                         SizedBox(
                           width: get_width(context),
@@ -62,7 +66,7 @@ class _SignupState extends State<Signup> {
                         TextFormField(
                             controller: username,
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.email),
+                              prefixIcon: Icon(Icons.person),
                               labelText: 'User name',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -85,7 +89,7 @@ class _SignupState extends State<Signup> {
                         TextFormField(
                             controller: email,
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: Icon(Icons.email),
                               labelText: 'E-mail',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -113,8 +117,8 @@ class _SignupState extends State<Signup> {
                             ],
                             controller: phonenumber,
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.lock),
-                              labelText: 'phone number',
+                              prefixIcon: Icon(Icons.phone),
+                              labelText: 'Phone Number',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -138,7 +142,7 @@ class _SignupState extends State<Signup> {
                             controller: password,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.lock),
-                              labelText: 'password',
+                              labelText: 'Password',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -188,7 +192,19 @@ class _SignupState extends State<Signup> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  HomePage()));
+                                                  hometabs()));
+                                      fireinstance
+                                          .doc(instance.currentUser.uid)
+                                          .set({
+                                        'username': user_name,
+                                        'image':
+                                            'https://firebasestorage.googleapis.com/v0/b/chatooapp-f0697.appspot.com/o/son.png?alt=media&token=92481c8e-d144-45cc-b2dd-31d0db117769',
+                                        'phone': phone_number,
+                                        'description': ' New User',
+                                        'frindes': '',
+                                        'email': e_mail,
+                                        'id': instance.currentUser.uid,
+                                      });
                                     } catch (e) {}
                                   },
                                   child: Text(

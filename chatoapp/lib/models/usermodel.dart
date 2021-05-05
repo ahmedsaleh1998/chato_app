@@ -4,5 +4,8 @@ class user {
   String description;
   num phone;
   String image;
-  user({this.username, this.description, this.image, this.phone, this.email});
+
+  String id;
+  user(this.username, this.description, this.image, this.phone, this.email,
+      this.id);
 }

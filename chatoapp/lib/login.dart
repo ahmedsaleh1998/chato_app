@@ -1,7 +1,8 @@
 import 'dart:ui';
 
 import 'package:chato_app/forgetpassword.dart';
-import 'package:chato_app/homepage.dart';
+
+import 'package:chato_app/hometabs.dart';
 import 'package:chato_app/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _LoginState extends State<Login> {
     instance.authStateChanges().listen((User user) {
       if (user != null) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => hometabs()));
       }
     });
   }
@@ -64,7 +65,7 @@ class _LoginState extends State<Login> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
-                          child: Text('Login', style: TextStyle(fontSize: 30)),
+                          child: Text('Log in', style: TextStyle(fontSize: 30)),
                         ),
                         SizedBox(
                           width: get_width(context),
@@ -143,14 +144,14 @@ class _LoginState extends State<Login> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    HomePage()));
+                                                    hometabs()));
                                       } catch (e) {
                                         showsnackbaaar(context);
                                       }
                                     }
                                   },
                                   child: Text(
-                                    'Login',
+                                    'Log in',
                                     style: TextStyle(
                                         fontSize: 20, color: Colors.white),
                                   ),

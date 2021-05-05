@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:chato_app/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chato_app/w_and_h.dart';
 
@@ -10,8 +11,9 @@ class forgetpass extends StatefulWidget {
 }
 
 class _forgetpassState extends State<forgetpass> {
-  final _formKey = GlobalKey<FormState>();
-  GlobalKey scafolindexkey = GlobalKey<ScaffoldState>();
+  final _formKeyforget = GlobalKey<FormState>();
+  GlobalKey scafolgforget = GlobalKey<ScaffoldState>();
+  FirebaseAuth instance = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     TextEditingController email = TextEditingController();
@@ -23,7 +25,7 @@ class _forgetpassState extends State<forgetpass> {
       debugShowCheckedModeBanner: false,
       title: 'forgetpassword',
       home: Scaffold(
-        key: scafolindexkey,
+        key: scafolgforget,
         body: Container(
           width: get_width(context) / 1.1,
           height: get_height(context),
@@ -37,7 +39,7 @@ class _forgetpassState extends State<forgetpass> {
                     primaryColorDark: Colors.red,
                   ),
                   child: Form(
-                    key: _formKey,
+                    key: _formKeyforget,
                     child: Column(
                       children: [
                         Padding(
@@ -84,12 +86,17 @@ class _forgetpassState extends State<forgetpass> {
                                 width: get_width(context) / 2,
                                 height: get_height(context) / 15,
                                 child: RaisedButton(
-                                  onPressed: () {
-                                    if (_formKey.currentState.validate()) {
+                                  onPressed: () async {
+                                    if (_formKeyforget.currentState
+                                        .validate()) {
                                       setState(() {
                                         e_mail = email.text;
                                       });
                                     }
+                                    try {
+                                      await instance.sendPasswordResetEmail(
+                                          email: e_mail);
+                                    } catch (e) {}
                                   },
                                   child: Text(
                                     'Reset Password',
