@@ -123,7 +123,7 @@ class _Add_friendState extends State<Add_friend> {
                                     'email': doc['email'],
                                     'phone': doc['phone'],
                                     'image': doc['image'],
-                                    'description': doc['description']
+                                    'description': doc['description'],
                                   });
                                 }
                               });

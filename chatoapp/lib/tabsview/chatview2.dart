@@ -1,3 +1,4 @@
+import 'package:chato_app/frind_chat_screen.dart';
 import 'package:chato_app/w_and_h.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,6 +36,15 @@ class _Chat_page2State extends State<Chat_page2> {
               itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Chat_screen(
+                                snapshot.data.docs[index].data()['id'],
+                                snapshot.data.docs[index].data()['username'],
+                                snapshot.data.docs[index].data()['image'])));
+                  },
                   child: SizedBox(
                     width: get_width(context),
                     height: get_height(context) / 10,
