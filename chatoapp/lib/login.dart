@@ -22,7 +22,7 @@ class _LoginState extends State<Login> {
     super.initState();
     instance.authStateChanges().listen((User user) {
       if (user != null) {
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => hometabs()));
       }
     });
@@ -140,7 +140,7 @@ class _LoginState extends State<Login> {
                                             .signInWithEmailAndPassword(
                                                 email: e_mail,
                                                 password: pass_word);
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
@@ -166,7 +166,7 @@ class _LoginState extends State<Login> {
                                 height: get_height(context) / 15,
                                 child: RaisedButton(
                                   onPressed: () {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => Signup()));

@@ -188,7 +188,7 @@ class _SignupState extends State<Signup> {
                                           .createUserWithEmailAndPassword(
                                               email: e_mail,
                                               password: pass_word);
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
@@ -223,7 +223,7 @@ class _SignupState extends State<Signup> {
                                 height: get_height(context) / 15,
                                 child: RaisedButton(
                                   onPressed: () {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => Login()));

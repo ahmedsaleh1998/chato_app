@@ -49,31 +49,47 @@ class _Chat_page2State extends State<Chat_page2> {
                     width: get_width(context),
                     height: get_height(context) / 10,
                     child: Card(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(snapshot.data.docs[index]
-                                    .data()['username']),
-                                Text(snapshot.data.docs[index]
-                                    .data()['description']),
-                              ],
+                      color: Colors.white,
+                      shadowColor: Color.fromRGBO(55, 79, 71, 1.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: CircleAvatar(
+                                radius: get_height(context) / 25,
+                                backgroundImage: NetworkImage(
+                                    snapshot.data.docs[index].data()['image']),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: CircleAvatar(
-                              radius: get_height(context) / 25,
-                              backgroundImage: NetworkImage(
-                                  snapshot.data.docs[index].data()['image']),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      snapshot.data.docs[index]
+                                          .data()['username'],
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold)),
+                                  Text(
+                                      snapshot.data.docs[index]
+                                          .data()['description'],
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.black54)),
+                                ],
+                              ),
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

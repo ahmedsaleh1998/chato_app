@@ -85,92 +85,106 @@ class _Chat_screenState extends State<Chat_screen> {
                                 // if (snapshot.data.docs[index]
                                 //         .data()['sender'] ==
                                 //     instanse.currentUser.uid) {
-                                return Align(
-                                  alignment: (snapshot.data.docs[index]
-                                              .data()['sender'] ==
-                                          instanse.currentUser.uid)
-                                      ? Alignment.topLeft
-                                      : Alignment.topRight,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: (snapshot.data.docs[index]
-                                                      .data()['sender'] ==
-                                                  instanse.currentUser.uid)
-                                              ? Colors.white
-                                              : Colors.green[100],
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 8.0,
-                                            bottom: 8.0,
-                                            right: 10,
-                                            left: 10),
-                                        child: Text(
-                                            "  " +
-                                                snapshot.data.docs[index]
-                                                    .data()['content'] +
-                                                "  ",
-                                            style: TextStyle(fontSize: 18)),
+                                return Row(
+                                    mainAxisAlignment: (snapshot
+                                                .data.docs[index]
+                                                .data()['sender'] ==
+                                            instanse.currentUser.uid)
+                                        ? MainAxisAlignment.end
+                                        : MainAxisAlignment.start,
+                                    children: [
+                                      Flexible(
+                                        child: Container(
+                                          margin: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              color: (snapshot.data.docs[index]
+                                                          .data()['sender'] ==
+                                                      instanse.currentUser.uid)
+                                                  ? Colors.white
+                                                  : Colors.green[100],
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                              top: 8.0,
+                                              bottom: 8.0,
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(2),
+                                              child: Text(
+                                                  "  " +
+                                                      snapshot.data.docs[index]
+                                                          .data()['content'] +
+                                                      "  ",
+                                                  style:
+                                                      TextStyle(fontSize: 18)),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                );
+                                    ]);
                               });
                         }),
                   ),
                   Container(
                     width: get_width(context),
-                    height: get_height(context) * 0.09,
-                    color: Colors.green[200],
+                    height: get_height(context) * 0.08,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromRGBO(255, 255, 255, 0.7),
+                    ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        SizedBox(
-                          width: get_width(context) / 9,
-                          height: get_height(context) * 0.08,
-                          child: IconButton(
-                            iconSize: 30,
-                            icon: Icon(
-                              Icons.send_rounded,
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.black),
+                          child: SizedBox(
+                            width: get_width(context) / 9,
+                            height: get_height(context) * 0.06,
+                            child: IconButton(
+                              iconSize: 30,
+                              icon: Icon(
+                                Icons.send_rounded,
+                                color: Colors.green,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  massagetext = massage.text;
+                                });
+                                if (massagetext != null) {
+                                  FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(instanse.currentUser.uid)
+                                      .collection('frindes')
+                                      .doc(widget.frind_id.trim())
+                                      .collection('massages')
+                                      .doc()
+                                      .set({
+                                    'sender': instanse.currentUser.uid,
+                                    'resever': widget.frind_id.trim(),
+                                    'date': DateTime.now(),
+                                    'content': massagetext
+                                  });
+                                  //////////////////////////
+                                  FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(widget.frind_id.trim())
+                                      .collection('frindes')
+                                      .doc(instanse.currentUser.uid)
+                                      .collection('massages')
+                                      .doc()
+                                      .set({
+                                    'sender': instanse.currentUser.uid,
+                                    'resever': widget.frind_id.trim(),
+                                    'date': DateTime.now(),
+                                    'content': massagetext
+                                  });
+                                }
+                              },
                             ),
-                            onPressed: () {
-                              setState(() {
-                                massagetext = massage.text;
-                              });
-                              if (massagetext != null) {
-                                FirebaseFirestore.instance
-                                    .collection('users')
-                                    .doc(instanse.currentUser.uid)
-                                    .collection('frindes')
-                                    .doc(widget.frind_id.trim())
-                                    .collection('massages')
-                                    .doc()
-                                    .set({
-                                  'sender': instanse.currentUser.uid,
-                                  'resever': widget.frind_id.trim(),
-                                  'date': DateTime.now(),
-                                  'content': massagetext
-                                });
-                                //////////////////////////
-                                FirebaseFirestore.instance
-                                    .collection('users')
-                                    .doc(widget.frind_id.trim())
-                                    .collection('frindes')
-                                    .doc(instanse.currentUser.uid)
-                                    .collection('massages')
-                                    .doc()
-                                    .set({
-                                  'sender': instanse.currentUser.uid,
-                                  'resever': widget.frind_id.trim(),
-                                  'date': DateTime.now(),
-                                  'content': massagetext
-                                });
-                              }
-                            },
                           ),
                         ),
                         SizedBox(

@@ -30,7 +30,7 @@ class _hometabsState extends State<hometabs> {
                   icon: Icon(Icons.logout),
                   onPressed: () async {
                     await instance.signOut();
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => Login()));
                   }),
             ],

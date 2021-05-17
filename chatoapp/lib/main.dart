@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:chato_app/hometabs.dart';
 import 'package:chato_app/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,10 +25,10 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     instance.authStateChanges().listen((User user) {
       if (user == null) {
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Login()));
       } else {
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => hometabs()));
       }
     });
@@ -36,7 +37,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: AnimatedSplashScreen(
+          splash: Image.asset('assets/0100.gif'),
+          splashIconSize: 350,
+          backgroundColor: Colors.white,
+          nextScreen: Login()),
     );
   }
 }
